@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const SplashScreen(), // Defina a SplashScreen como home
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -31,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navegar para a tela principal após 3 segundos
+    // Navegar para a tela inicial após 3 segundos
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Flutter Demo Home Page')),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
   }
@@ -42,57 +43,74 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Image.asset('assets/CAPA.png'), // Sua imagem aqui
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/CAPA.png'), // Imagem da tela de splash
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+// Tela inicial após a splash
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Você pressionou o botão esta quantidade de vezes:',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Image.asset(
+              'assets/logo.png', // Adicione o logo do "EcoCity"
+              height: 100, // Tamanho da imagem
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Seu app de sustentabilidade urbana',
+            style: TextStyle(
+              fontSize: 16,
+              color: Color.fromARGB(255, 124, 124, 124),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Incrementar',
-        child: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton(
+            onPressed: () {
+              // Ação do botão
+            },
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor:
+                  const Color.fromARGB(255, 107, 175, 19), // Cor de fundo
+            ),
+            child: const Text(
+              'Acessar minha conta',
+              style: TextStyle(
+                color: Colors.white, // Cor do texto
+                fontSize: 16, // Tamanho da fonte (ajuste conforme necessário)
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: () {
+              // Ação do botão "Me cadastrar"
+            },
+            child: const Text(
+              'Me cadastrar',
+              style: TextStyle(color: Color.fromARGB(255, 107, 175, 19)),
+            ),
+          ),
+        ],
       ),
     );
   }
